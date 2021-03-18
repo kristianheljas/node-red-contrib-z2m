@@ -18,11 +18,23 @@ cd /path/to/node-red-user-dir
 npm install /path/to/node-red-contrib-zigbee2mqtt
 ```
 
+## Development server
+
+You can run integrated node-red devlopment server by running `yarn gulp start`, which will:
+
+1. Compile all sources & copy static assets
+2. Run node-red development server
+3. Automatically compile and restart the server on file changes
+
+By default the development server listens on port `1880`, but can be configured via `PORT` enviroment variable (ie. `PORT=8080 yarn gulp start`).
+
+The development server stores it's data and configuration inside `.node-red/` directory.
+
 ## Development
 
 ```sh
-# Build & watch sources
-yarn gulp watch
+# Start local node-red instance & watch for file changes
+yarn gulp start
 
 ## EDIT SOURCES ##
 
