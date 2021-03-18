@@ -1,0 +1,9 @@
+{
+    "name": "node-red-project",
+    "version": "0.0.1",
+    "private": true,
+    "description": "A Node-RED Project",
+    "dependencies": {
+        "node-red-contrib-z2m": "link:../"
+    }
+}
