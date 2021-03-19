@@ -18,8 +18,14 @@ jobs:
         with:
           node-version: '14'
 
+      - name: Cache yarn dependencies
+        uses: actions/cache@v2
+        with:
+          path: .yarn
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: yarn --cache-folder .yarn --frozen-lockfile
 
       - name: Lint using eslint
         run: yarn eslint .
