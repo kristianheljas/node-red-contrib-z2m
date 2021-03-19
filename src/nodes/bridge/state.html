@@ -1,0 +1,62 @@
+<script type="text/javascript">
+  RED.nodes.registerType('z2m-bridge-state', {
+    category: 'zigbee2mqtt',
+    color: '#ffcc66',
+    paletteLabel: 'z2m state',
+    icon: 'font-awesome/fa-info',
+    outputs: 1,
+    label: function () {
+      return this.name || 'zigbee2qmtt state';
+    },
+    defaults: {
+      name: { value: '' },
+      broker: { type: 'z2m-broker', required: true },
+      initial: { value: true },
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="z2m-bridge-state">
+  <div class="form-row" style="height: 34px;">
+    <label for="node-input-broker"><i class="fa fa-globe"></i> Z2M Broker</label>
+    <input type="text" id="node-input-broker" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-initial"><i class="fa fa-filter"></i> Options</label>
+    <label for="node-input-initial" style="width:70%">
+      <input type="checkbox" id="node-input-initial" style="display:inline-block; width:22px; vertical-align:top;" />
+      include initial (retained) value
+    </label>
+  </div>
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name" />
+  </div>
+</script>
+
+<script type="text/html" data-help-name="z2m-bridge-state">
+  <p>Get zigbee2mqtt state updates</p>
+
+  <h3>Outputs</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">string</span></dt>
+    <dd>
+      either <code>"online"</code> or <code>"offline"</code>, see
+      <a href="https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html#zigbee2mqttbridgestate">
+        Zigbee2MQTT docs
+      </a>
+    </dd>
+    <dt>retain <span class="property-type">boolean</span></dt>
+    <dd>
+      <ul>
+        <li><code>true</code> - state was received upon initial connection and did not actually change</li>
+        <li><code>false</code> - the state was updated either by last will or zigbee2mqtt itself</li>
+      </ul>
+    </dd>
+    <dt>topic <span class="property-type">string</span></dt>
+    <dd>the MQTT topic, in the form of <code>${base_topic}/bridge/state</code></dd>
+  </dl>
+
+  <h3>Details</h3>
+  <p>If you want to output only when the state changes, uncheck <code>send initial value</code> in the node options</p>
+</script>
