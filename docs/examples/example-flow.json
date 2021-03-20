@@ -1,0 +1,93 @@
+[
+  {
+    "id": "6c0dfa0b.ff5904",
+    "type": "z2m-bridge-state",
+    "z": "f4339d3c.c5999",
+    "name": "",
+    "broker": "df78d9a5.51f6f8",
+    "initial": true,
+    "x": 550,
+    "y": 280,
+    "wires": [["8b39237c.f6143"]]
+  },
+  {
+    "id": "8b39237c.f6143",
+    "type": "debug",
+    "z": "f4339d3c.c5999",
+    "name": "",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 750,
+    "y": 280,
+    "wires": []
+  },
+  {
+    "id": "4adf9083.ff31b",
+    "type": "z2m-bridge-logs",
+    "z": "f4339d3c.c5999",
+    "name": "",
+    "broker": "df78d9a5.51f6f8",
+    "level": "error",
+    "x": 540,
+    "y": 340,
+    "wires": [["91b8b861.3c0858"]]
+  },
+  {
+    "id": "91b8b861.3c0858",
+    "type": "debug",
+    "z": "f4339d3c.c5999",
+    "name": "",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 770,
+    "y": 340,
+    "wires": []
+  },
+  {
+    "id": "36e2990e.feea16",
+    "type": "z2m-bridge-restart",
+    "z": "f4339d3c.c5999",
+    "name": "",
+    "broker": "df78d9a5.51f6f8",
+    "x": 550,
+    "y": 220,
+    "wires": []
+  },
+  {
+    "id": "1e025afe.036aa5",
+    "type": "inject",
+    "z": "f4339d3c.c5999",
+    "name": "",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 360,
+    "y": 220,
+    "wires": [["36e2990e.feea16"]]
+  }
+]

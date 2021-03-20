@@ -1,6 +1,44 @@
 # node-red-contrib-zigbee2mqtt
 
+A collection on [Node-RED](https://nodered.org/) nodes interfacing with [Zigbee2MQTT](https://www.zigbee2mqtt.io/).
+
+Inspired by [node-red-contrib-zigbee2mqtt](https://flows.nodered.org/node/node-red-contrib-zigbee2mqtt) with following key differences:
+
+- Written in Typescript
+- Uses built-in Node-RED MQTT configuration nodes
+- Uses the new [Zigbee2MQTT API](https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html)
+
+## A word of caution
+
+This project is work in progress and might be subject to change dramatically.
+
+Right now, it lives in "personal pet project" status, which I do use to automate my home with, so you can expect some stability :)
+
+## Example
+
+Currently, only few nodes are available:
+
+![example-flow.png](/docs/examples/example-flow.png)
+
+View source: [example-flow.json](/docs/examples/example-flow.json)
+
 ## Quickstart
+
+See [Node-RED docs](https://nodered.org/docs/user-guide/runtime/adding-nodes) about how to install nodes using NPM or package.json
+
+But in the gist it is just:
+
+```sh
+# Navigate to node-red userDir (yours might differ!)
+cd $HOME/.node-red
+
+# Install this package
+npm install node-red-contrib-z2m
+
+# Restart Node-RED!
+```
+
+## Developer quickstart
 
 ```sh
 # Clone this repository
