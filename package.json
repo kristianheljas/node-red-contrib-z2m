@@ -1,12 +1,26 @@
 {
   "name": "node-red-contrib-z2m",
   "version": "0.0.1",
+  "private": true,
+  "description": "Node-RED nodes for zigbee2mqtt",
+  "keywords": [
+    "node-red",
+    "zigbee2mqtt",
+    "z2m",
+    "mqtt"
+  ],
+  "homepage": "https://github.com/kristianheljas/node-red-contrib-z2m",
+  "bugs": {
+    "url": "https://github.com/kristianheljas/node-red-contrib-z2m/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kristianheljas/node-red-contrib-z2m.git"
+  },
   "license": "MIT",
   "author": "Kristian Heljas <kristian@kristian.ee>",
   "main": "index.js",
-  "files": [
-    "dist"
-  ],
+  "files": [],
   "scripts": {
     "build": "gulp",
     "lint": "eslint  --fix .",
