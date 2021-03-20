@@ -11,7 +11,7 @@
     "build": "gulp",
     "lint": "eslint  --fix .",
     "format": "prettier --write .",
-    "prepare": "husky install && yarn --cwd .node-red add link:../"
+    "prepare": "node scripts/not-project-root.js || (husky install && yarn --cwd .node-red)"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",
