@@ -29,12 +29,14 @@
     "format": "prettier --write .",
     "prepack": "gulp prepack",
     "postpack": "gulp postpack",
-    "prepare": "node scripts/not-project-root.js || (husky install && yarn --cwd .node-red)"
+    "prepare": "is-ci || node scripts/not-project-root.js || (husky install && yarn --cwd .node-red)"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",
     "@commitlint/config-conventional": "^12.0.1",
     "@schemastore/package": "^0.0.6",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/git": "^9.0.0",
     "@types/eslint": "^7.2.7",
     "@types/fancy-log": "^1.3.1",
     "@types/gulp": "^4.0.8",
@@ -57,6 +59,7 @@
     "globby": "^11.0.2",
     "gulp": "^4.0.2",
     "husky": "^5.1.3",
+    "is-ci": "^3.0.0",
     "lint-staged": "^10.5.4",
     "minimist": "^1.2.5",
     "mqtt": "^4.2.6",
@@ -65,6 +68,7 @@
     "plugin-error": "^1.0.1",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
+    "semantic-release": "^17.4.2",
     "sort-package-json": "^1.49.0",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.3",
