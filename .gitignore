@@ -1,3 +1,6 @@
+# File backups
+*.bak
+
 # Eslint cache
 .eslintcache
 
