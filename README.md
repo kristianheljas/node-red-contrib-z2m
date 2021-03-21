@@ -1,4 +1,4 @@
-# node-red-contrib-zigbee2mqtt
+# node-red-contrib-z2m
 
 A collection on [Node-RED](https://nodered.org/) nodes interfacing with [Zigbee2MQTT](https://www.zigbee2mqtt.io/).
 
