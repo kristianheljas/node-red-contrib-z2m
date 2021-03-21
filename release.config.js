@@ -2,7 +2,16 @@
 module.exports = {
   branches: ['main', { name: 'dev', prerelease: 'dev' }],
   plugins: [
-    '@semantic-release/commit-analyzer',
+    [
+      '@semantic-release/commit-analyzer',
+      {
+        releaseRules: [
+          { type: 'chore', scope: 'deps', release: 'patch' },
+          { type: 'docs', scope: 'README', release: 'patch' },
+          { scope: 'no-release', release: false },
+        ],
+      },
+    ],
     '@semantic-release/release-notes-generator',
     [
       '@semantic-release/changelog',
