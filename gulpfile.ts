@@ -8,6 +8,9 @@ import log from 'fancy-log';
 import nodemon from 'nodemon';
 import rimraf from 'rimraf';
 import { TaskFunction } from 'undertaker';
+import minimist from 'minimist';
+
+const argv = minimist(process.argv.slice(2));
 
 // not using import "fs/promises" to remain compatible with node v12
 const { mkdir, stat } = fs.promises;
@@ -17,6 +20,8 @@ const stdio = 'inherit';
 const binFolder = './node_modules/.bin/';
 
 const tscBin = `${binFolder}/tsc`;
+const tscArgs = ['--project', argv.project || 'tsconfig.json'];
+
 const nodeRedBin = `${binFolder}/node-red`;
 
 /* #region Cleanup tasks */
@@ -29,7 +34,7 @@ export const clean: TaskFunction = (done) => {
 /* #region Build tasks */
 
 const buildTypescript: TaskFunction = () => {
-  return spawn(tscBin, { stdio });
+  return spawn(tscBin, tscArgs, { stdio });
 };
 
 const copyHtml: TaskFunction = () => {
@@ -40,9 +45,23 @@ const copyHtml: TaskFunction = () => {
 /* #region Development tasks */
 
 export const watchTypescript: TaskFunction = () => {
-  // Using tsBuildInfoFile to detect when full build has completed
-  const incrementalArgs = ['--incremental', '--tsBuildInfoFile', 'dist/.tsbuildinfo'];
-  return spawn(tscBin, [...incrementalArgs, '--watch', '--preserveWatchOutput'], { stdio });
+  return spawn(
+    tscBin,
+    [
+      ...tscArgs,
+      // dist/.tsbuildinfo notifies watcher of complete build
+      '--incremental',
+      '--tsBuildInfoFile',
+      'dist/.tsbuildinfo',
+      // Do not clear output
+      '--preserveWatchOutput',
+      // Keep watching files
+      '--watch',
+    ],
+    {
+      stdio,
+    },
+  );
 };
 
 const watchHtml: TaskFunction = () => {

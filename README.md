@@ -48,13 +48,15 @@ cd node-red-contrib-zigbee2mqtt
 # Install dependencies (also installs husky git hooks)
 yarn
 
-# Compile soures
-yarn build
+# Compile sources (--dev enables sourceMaps, useful for debugging)
+yarn build --dev
 
 # Install this repository locally
 cd /path/to/node-red-user-dir
 npm install /path/to/node-red-contrib-zigbee2mqtt
 ```
+
+To automatically watch for file changes run `yarn gulp watch` instead (also supports `--dev flag`)
 
 ## Development server
 
