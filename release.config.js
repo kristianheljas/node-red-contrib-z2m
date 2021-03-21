@@ -18,6 +18,6 @@ module.exports = {
       },
     ],
     ['@semantic-release/github', { assets: 'node-red-contrib-z2m-*.tgz' }],
-    '@semantic-release/npm',
+    ['@semantic-release/npm', { tarballDir: '.' }],
   ],
 };
