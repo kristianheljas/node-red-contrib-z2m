@@ -1,5 +1,5 @@
 import type {
-  EditorRED,
+  EditorRED as RED,
   EditorNodeDef as NodeDef,
   EditorNodeProperties as NodeProperties,
   EditorNodeCredentials as NodeCredential,
@@ -18,9 +18,7 @@ declare module '@node-red/editor-client' {
 }
 
 declare global {
-  const RED: EditorRED;
-
   namespace Editor {
-    export { NodeDef, NodeProperties, NodeCredential };
+    export { RED, NodeDef, NodeProperties, NodeCredential };
   }
 }
