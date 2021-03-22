@@ -1,7 +1,7 @@
 import type { NodeAPI } from 'node-red';
 import { Z2mNode } from '../../core/z2m-node';
 
-class Z2mRestartNode extends Z2mNode {
+class Z2mBridgeRestartNode extends Z2mNode {
   setup(): void {
     this.on('input', () => {
       this.z2m.restart();
@@ -15,5 +15,5 @@ class Z2mRestartNode extends Z2mNode {
 }
 
 export = (RED: NodeAPI): void => {
-  Z2mRestartNode.register(RED, 'z2m-bridge-restart');
+  Z2mBridgeRestartNode.register(RED, 'z2m-bridge-restart');
 };

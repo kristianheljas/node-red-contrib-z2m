@@ -1,6 +1,7 @@
-import type { NodeAPI, NodeDef } from 'node-red';
 import express, { Router } from 'express';
-import { PACKAGE_NAME, PACKAGE_VERSION, PACKAGE_NODES } from '../core/constants';
+import type { NodeAPI } from 'node-red';
+import { PACKAGE_NAME, PACKAGE_NODES, PACKAGE_VERSION } from '../core/constants';
+import { Z2mBrokerNodeDef } from '../core/z2m-broker';
 
 const serveStaticAssets = express.static(`${__dirname}/../frontend/`, {
   index: false,
@@ -33,11 +34,11 @@ export class Z2mApi {
     return { ...this.packageInfo, brokers: this.brokers() };
   }
 
-  private brokers(): NodeDef[] {
-    const brokers: NodeDef[] = [];
+  private brokers(): Z2mBrokerNodeDef[] {
+    const brokers: Z2mBrokerNodeDef[] = [];
     this.red.nodes.eachNode((node) => {
       if (node.type === 'z2m-broker') {
-        brokers.push(node);
+        brokers.push(node as Z2mBrokerNodeDef);
       }
     });
     return brokers;

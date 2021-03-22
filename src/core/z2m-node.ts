@@ -9,7 +9,7 @@ export interface Z2mNodeDef extends NodeDef {
   topic: string;
 }
 
-export abstract class Z2mNode<TConfig = unknown> extends Node<Z2mNodeDef & TConfig> {
+export abstract class Z2mNode<TConfig extends Z2mNodeDef = Z2mNodeDef> extends Node<TConfig> {
   z2m: Z2mBrokerNode;
 
   constructor(config: Z2mNodeDef & TConfig) {

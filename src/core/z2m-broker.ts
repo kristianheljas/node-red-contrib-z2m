@@ -27,12 +27,12 @@ export { SubscriptionCallback };
 
 export type BrokerState = 'disconnected' | 'connecting' | 'offline' | 'online';
 
-export interface BrokerConfig {
+export interface Z2mBrokerNodeDef extends NodeDef {
   broker: string;
   topic: string;
 }
 
-export class Z2mBrokerNode extends Node<BrokerConfig> {
+export class Z2mBrokerNode extends Node<Z2mBrokerNodeDef> {
   private mqtt: MQTTBrokerNode;
 
   configured = false;
@@ -51,7 +51,7 @@ export class Z2mBrokerNode extends Node<BrokerConfig> {
 
   devices: Z2mDevice[] = [];
 
-  constructor(config: NodeDef & BrokerConfig) {
+  constructor(config: NodeDef & Z2mBrokerNodeDef) {
     super(config);
     this.mqtt = this.red.nodes.getNode(this.config.broker) as MQTTBrokerNode;
 

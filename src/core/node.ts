@@ -13,11 +13,11 @@ export interface NodeMessage extends NRNodeMessage {
 
 export interface Node<TConfig> extends NRNode {
   red: NodeAPI;
-  config: NodeDef & TConfig;
+  config: TConfig;
   send(msg?: NodeMessage | NodeMessage[]): void;
 }
-export abstract class Node<TConfig = unknown> {
-  protected constructor(public config: NodeDef & TConfig) {
+export abstract class Node<TConfig extends NodeDef = NodeDef> {
+  protected constructor(public config: TConfig) {
     this.red.nodes.createNode(this, config);
   }
 
