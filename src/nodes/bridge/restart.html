@@ -1,17 +1,11 @@
 <script type="text/javascript">
-  RED.nodes.registerType('z2m-bridge-restart', {
-    category: 'zigbee2mqtt',
-    color: '#ffcc66',
+  Z2mHelper.registerType('z2m-bridge-restart', {
     paletteLabel: 'restart z2m',
     icon: 'font-awesome/fa-refresh',
     align: 'right',
     inputs: 1,
     label: function () {
       return this.name || 'restart zigbee2mqtt';
-    },
-    defaults: {
-      name: { value: '' },
-      broker: { type: 'z2m-broker', required: true },
     },
   });
 </script>

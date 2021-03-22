@@ -1,7 +1,5 @@
 <script type="text/javascript">
-  RED.nodes.registerType('z2m-bridge-state', {
-    category: 'zigbee2mqtt',
-    color: '#ffcc66',
+  Z2mHelper.registerType('z2m-bridge-state', {
     paletteLabel: 'z2m state',
     icon: 'font-awesome/fa-info',
     outputs: 1,
@@ -9,8 +7,6 @@
       return this.name || 'zigbee2qmtt state';
     },
     defaults: {
-      name: { value: '' },
-      broker: { type: 'z2m-broker', required: true },
       initial: { value: true },
     },
   });
