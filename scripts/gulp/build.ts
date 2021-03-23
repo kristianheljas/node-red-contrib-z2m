@@ -84,7 +84,7 @@ export const startDevServer: TaskFunction = (done) => {
     script: `${nodeRedBin}`,
     args: ['--userDir', '.node-red'],
     stdin: false,
-    delay: 200,
+    delay: 1000,
   });
 
   monitor.on('restart', () => log('file change detected, restarting server...'));
