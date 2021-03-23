@@ -1,7 +1,10 @@
 import type { NodeAPI } from 'node-red';
-import { Z2mNode } from '../../core/z2m-node';
+import { Z2mNode, CheckNodeOptions } from '../../core/z2m-node';
 
+@CheckNodeOptions
 class Z2mBridgeLogsNode extends Z2mNode {
+  static type = 'z2m-bridge-logs';
+
   setup(): void {
     this.z2m.subscribe('bridge/logging', 0, this.onLogMessage.bind(this), this);
   }
@@ -13,5 +16,5 @@ class Z2mBridgeLogsNode extends Z2mNode {
 }
 
 export = (RED: NodeAPI): void => {
-  Z2mBridgeLogsNode.register(RED, 'z2m-bridge-logs');
+  Z2mBridgeLogsNode.register(RED);
 };

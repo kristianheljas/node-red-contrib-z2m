@@ -2,7 +2,7 @@
 import type { MQTTBrokerNode, MQTTMessage, SubscriptionCallback } from '@node-red/nodes/core/network/10-mqtt';
 import type { IPublishPacket, QoS } from 'mqtt';
 import type { NodeDef, NodeStatus, NodeStatusFill } from 'node-red';
-import { Node } from './node';
+import { Node, CheckNodeOptions } from './node';
 
 type BridgeState = 'online' | 'offline';
 
@@ -31,8 +31,10 @@ export interface Z2mBrokerNodeDef extends NodeDef {
   broker: string;
   topic: string;
 }
-
+@CheckNodeOptions
 export class Z2mBrokerNode extends Node<Z2mBrokerNodeDef> {
+  static type = 'z2m-broker';
+
   private mqtt: MQTTBrokerNode;
 
   configured = false;
@@ -51,7 +53,7 @@ export class Z2mBrokerNode extends Node<Z2mBrokerNodeDef> {
 
   devices: Z2mDevice[] = [];
 
-  constructor(config: NodeDef & Z2mBrokerNodeDef) {
+  constructor(config: Z2mBrokerNodeDef) {
     super(config);
     this.mqtt = this.red.nodes.getNode(this.config.broker) as MQTTBrokerNode;
 

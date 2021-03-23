@@ -1,12 +1,15 @@
 import type { IPublishPacket } from 'mqtt';
 import type { NodeAPI } from 'node-red';
-import { Z2mNode, Z2mNodeDef } from '../../core/z2m-node';
+import { Z2mNode, Z2mNodeDef, CheckNodeOptions } from '../../core/z2m-node';
 
 interface Z2mBridgeStateNodeDef extends Z2mNodeDef {
   initial: boolean;
 }
 
+@CheckNodeOptions
 class Z2mBridgeStateNode extends Z2mNode<Z2mBridgeStateNodeDef> {
+  static type = 'z2m-bridge-state';
+
   setup(): void {
     this.z2m.subscribe('bridge/state', 1, this.onStateMessage.bind(this), this);
   }
@@ -20,5 +23,5 @@ class Z2mBridgeStateNode extends Z2mNode<Z2mBridgeStateNodeDef> {
 }
 
 export = (RED: NodeAPI): void => {
-  Z2mBridgeStateNode.register(RED, 'z2m-bridge-state');
+  Z2mBridgeStateNode.register(RED);
 };
