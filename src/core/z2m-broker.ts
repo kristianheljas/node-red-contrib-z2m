@@ -1,16 +1,9 @@
 // eslint-disable-next-line node/no-extraneous-import
 import type { MQTTBrokerNode, MQTTMessage, SubscriptionCallback } from '@node-red/nodes/core/network/10-mqtt';
-import type { IPublishPacket, QoS } from 'mqtt';
+import type { QoS } from 'mqtt';
 import type { NodeDef, NodeStatus, NodeStatusFill } from 'node-red';
-import { Node, CheckNodeOptions } from './node';
-
-type BridgeState = 'online' | 'offline';
-
-interface Bridge {
-  state: BridgeState;
-  info: Z2mBridgeInfo | null;
-  devices: Z2mDevice[];
-}
+import { CheckNodeOptions, Node } from './node';
+import { Z2mBridgeInfo, Z2mBridgeState, Z2mDevice, Z2mUtil } from './util';
 
 interface SubscriptionRegistry {
   [ref: string]: {
@@ -23,14 +16,13 @@ interface SubscriptionRegistry {
   };
 }
 
-export { SubscriptionCallback };
-
-export type BrokerState = 'disconnected' | 'connecting' | 'offline' | 'online';
+export type Z2mBrokerState = 'disconnected' | 'connecting' | 'offline' | 'online';
 
 export interface Z2mBrokerNodeDef extends NodeDef {
   broker: string;
   topic: string;
 }
+
 @CheckNodeOptions
 export class Z2mBrokerNode extends Node<Z2mBrokerNodeDef> {
   static type = 'z2m-broker';
@@ -43,13 +35,9 @@ export class Z2mBrokerNode extends Node<Z2mBrokerNodeDef> {
 
   subscriptions: SubscriptionRegistry = {};
 
-  state: BrokerState = 'disconnected';
+  state: Z2mBrokerState = 'disconnected';
 
-  bridge: Bridge = {
-    state: 'offline',
-    info: null,
-    devices: [],
-  };
+  bridge: Z2mBridgeInfo | null = null;
 
   devices: Z2mDevice[] = [];
 
@@ -105,7 +93,7 @@ export class Z2mBrokerNode extends Node<Z2mBrokerNodeDef> {
   }
 
   restart(): boolean {
-    if (this.bridge.state !== 'online') {
+    if (this.state !== 'online') {
       this.warn('bridge is not online, ignoring restart request');
       return false;
     }
@@ -126,29 +114,25 @@ export class Z2mBrokerNode extends Node<Z2mBrokerNodeDef> {
 
   status(): void {
     // mqtt-broker will call this this when mqtt status changes
-    this.refreshState();
+    if (!this.mqtt.connected) {
+      this.setState(this.mqtt.connecting ? 'connecting' : 'disconnected');
+    } else {
+      this.setState('offline');
+    }
   }
 
-  private updateDevices(devices: Z2mDevice[]) {
-    this.devices = devices.filter((device) => device.supported);
-  }
-
-  handleBridgeMessage(topic: string, buffer: Buffer, { retain }: IPublishPacket): void {
+  handleBridgeMessage(topic: string, buffer: Buffer): void {
     const type = topic.slice(this.config.topic.length + 8);
     const message = buffer.toString();
     switch (type) {
       case 'state':
-        this.bridge.state = ['online', 'offline'].includes(message) ? (message as BridgeState) : 'offline';
-        this.refreshState();
-        this.emit(`bridge:${message}`, retain);
-        this.emit('bridge:state', message);
+        this.setState(message as Z2mBridgeState);
         break;
       case 'info':
-        this.bridge.info = JSON.parse(message);
+        this.bridge = Z2mUtil.parseBridgeInfo(JSON.parse(message));
         break;
       case 'devices':
-        this.bridge.devices = JSON.parse(message);
-        this.updateDevices(this.bridge.devices);
+        this.devices = JSON.parse(message).filter(Z2mUtil.deviceSupported).map(Z2mUtil.parseDevice);
         break;
       default:
         this.warn(`Unhandled bridge topic '${topic}'`);
@@ -177,38 +161,26 @@ export class Z2mBrokerNode extends Node<Z2mBrokerNodeDef> {
     }
   }
 
-  private refreshState() {
-    // prettier-ignore
-
-    let state: BrokerState;
-    if (this.mqtt.connected) {
-      state = this.bridge.state;
-    } else {
-      state = this.mqtt.connecting ? 'connecting' : 'disconnected';
-    }
-
+  private setState(state: Z2mBrokerState) {
     if (state !== this.state) {
       this.state = state;
-      this.onStateChanged(state);
+
+      const colors: Record<Z2mBrokerState, NodeStatusFill> = {
+        disconnected: 'red',
+        offline: 'red',
+        connecting: 'yellow',
+        online: 'green',
+      };
+
+      const status: NodeStatus = {
+        shape: ['disconnected', 'ready'].includes(state) ? 'dot' : 'ring',
+        fill: colors[state],
+        text: state,
+      };
+
+      Object.values(this.subscriptions).forEach(({ node }) => {
+        node.status(status);
+      });
     }
-  }
-
-  private onStateChanged(state: BrokerState) {
-    const colors: Record<BrokerState, NodeStatusFill> = {
-      disconnected: 'red',
-      offline: 'red',
-      connecting: 'yellow',
-      online: 'green',
-    };
-
-    const status: NodeStatus = {
-      shape: ['disconnected', 'ready'].includes(state) ? 'dot' : 'ring',
-      fill: colors[state],
-      text: state,
-    };
-
-    Object.values(this.subscriptions).forEach(({ node }) => {
-      node.status(status);
-    });
   }
 }
