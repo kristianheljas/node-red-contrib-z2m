@@ -90,7 +90,8 @@
       "z2m-bridge-state": "dist/nodes/bridge/state.js",
       "z2m-bridge-restart": "dist/nodes/bridge/restart.js",
       "z2m-bridge-logs": "dist/nodes/bridge/logs.js",
-      "z2m-device-in": "dist/nodes/device/in.js"
+      "z2m-device-in": "dist/nodes/device/in.js",
+      "z2m-device-out": "dist/nodes/device/out.js"
     }
   }
 }
