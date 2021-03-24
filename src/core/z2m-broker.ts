@@ -162,25 +162,25 @@ export class Z2mBrokerNode extends Node<Z2mBrokerNodeDef> {
   }
 
   private setState(state: Z2mBrokerState) {
-    if (state !== this.state) {
-      this.state = state;
+    this.state = state;
 
-      const colors: Record<Z2mBrokerState, NodeStatusFill> = {
-        disconnected: 'red',
-        offline: 'red',
-        connecting: 'yellow',
-        online: 'green',
-      };
+    const colors: Record<Z2mBrokerState, NodeStatusFill> = {
+      disconnected: 'red',
+      offline: 'red',
+      connecting: 'yellow',
+      online: 'green',
+    };
 
-      const status: NodeStatus = {
-        shape: ['disconnected', 'ready'].includes(state) ? 'dot' : 'ring',
-        fill: colors[state],
-        text: state,
-      };
+    const status: NodeStatus = {
+      shape: ['disconnected', 'ready'].includes(state) ? 'dot' : 'ring',
+      fill: colors[state],
+      text: state,
+    };
 
-      Object.values(this.subscriptions).forEach(({ node }) => {
+    Object.values(this.subscriptions)
+      .filter((node) => node.node.type !== this.type)
+      .forEach(({ node }) => {
         node.status(status);
       });
-    }
   }
 }
