@@ -16,8 +16,11 @@ const stdio = 'inherit';
 
 const binFolder = './node_modules/.bin/';
 
+const webpackBin = `${binFolder}/webpack`;
+const webpackArgs = ['--config', argv.project || 'webpack.config.js'];
+
 const tscBin = `${binFolder}/tsc`;
-const tscArgs = ['--project', argv.project || 'tsconfig.json'];
+const tscArgs = ['--project', argv.project || 'tsconfig.build.json'];
 
 const nodeRedBin = `${binFolder}/node-red`;
 
@@ -30,15 +33,16 @@ export const clean: TaskFunction = (done) => {
 /* #endregion */
 /* #region Build tasks */
 
+export const buildFrontend: TaskFunction = () => spawn(webpackBin, webpackArgs, { stdio });
+
 export const buildTypescript: TaskFunction = () => spawn(tscBin, tscArgs, { stdio });
-buildTypescript.flags = {
-  '--project': 'Specify custom tsconfig.json file',
-};
 
 export const copyHtml: TaskFunction = () => src('src/**/*.html').pipe(dest('dist'));
 
 /* #endregion */
 /* #region Development tasks */
+
+export const watchFrontend: TaskFunction = () => spawn(webpackBin, [...webpackArgs, '--watch'], { stdio });
 
 export const watchTypescript: TaskFunction = () =>
   spawn(
@@ -93,5 +97,5 @@ export const startDevServer: TaskFunction = (done) => {
 
 /* #endregion */
 
-export const buildAll = parallel(buildTypescript, copyHtml);
-export const watchAll = parallel(watchTypescript, watchHtml);
+export const buildAll = parallel(buildTypescript, buildFrontend, copyHtml);
+export const watchAll = parallel(watchTypescript, watchFrontend, watchHtml);

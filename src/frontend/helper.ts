@@ -1,29 +1,26 @@
-/* eslint-disable @typescript-eslint/no-namespace,no-inner-declarations,import/prefer-default-export */
+declare const RED: Editor.RED;
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Z2mHelper {
-  declare const RED: Editor.RED;
-
-  function getBrokersFor(node: { z?: string }) {
-    const brokers: string[] = [];
-    try {
-      RED.nodes.eachConfig((config) => {
-        if (config.type === 'z2m-broker') {
-          const enabled = !config.d;
-          const accessible = !config.z || config.z === node.z;
-          if (enabled && accessible) {
-            brokers.push(config.id || '');
-          }
+function getBrokersFor(node: { z?: string }) {
+  const brokers: string[] = [];
+  try {
+    RED.nodes.eachConfig((config) => {
+      if (config.type === 'z2m-broker') {
+        const enabled = !config.d;
+        const accessible = !config.z || config.z === node.z;
+        if (enabled && accessible) {
+          brokers.push(config.id || '');
         }
-        return true;
-      });
-    } catch (e) {
-      /* since using internal and undocumented APIs, fail gracefully */
-    }
-    return brokers;
+      }
+      return true;
+    });
+  } catch (e) {
+    /* since using internal and undocumented APIs, fail gracefully */
   }
+  return brokers;
+}
 
-  export function registerType(nodeType: string, nodeDef: Partial<Editor.NodeDef>): void {
+export default class Z2mHelper {
+  static registerType(nodeType: string, nodeDef: Partial<Editor.NodeDef>): void {
     RED.nodes.registerType(nodeType, {
       // Provide default values
       category: 'zigbee2mqtt',
