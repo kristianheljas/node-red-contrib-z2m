@@ -19,6 +19,10 @@ export interface Z2mDevice {
   helpUrl: string;
 }
 
+export interface Z2mDeviceState {
+  [key: string]: unknown;
+}
+
 export class Z2mUtil {
   static getDeviceModelHelpUrl(model: string): string {
     // https://github.com/Koenkk/zigbee2mqtt.io/blob/master/docgen/utils.js#L13

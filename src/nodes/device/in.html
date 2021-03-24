@@ -1,0 +1,61 @@
+<script type="text/javascript">
+  Z2mHelper.registerType('z2m-device-in', {
+    paletteLabel: 'z2m device',
+    icon: 'font-awesome/fa-sign-out',
+    outputs: 1,
+    label: function () {
+      return this.name || this.topic || 'z2m device out';
+    },
+    defaults: {
+      topic: { value: '', required: true },
+      initial: { value: false },
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="z2m-device-in">
+  <div class="form-row" style="height: 34px;">
+    <label for="node-input-broker"><i class="fa fa-globe"></i> Z2M Broker</label>
+    <input type="text" id="node-input-broker" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-topic"><i class="fa fa-tag"></i> Topic</label>
+    <input type="text" id="node-input-topic" placeholder="Topic" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-initial"><i class="fa fa-filter"></i> Options</label>
+    <label for="node-input-initial" style="width:70%">
+      <input type="checkbox" id="node-input-initial" style="display:inline-block; width:22px; vertical-align:top;" />
+      send initial value
+    </label>
+  </div>
+</script>
+
+<script type="text/html" data-help-name="z2m-device-in">
+  <p>Receive zigbee2mqtt device state</p>
+
+  <p>
+    Read more at
+    <a href="https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html#zigbee2mqttfriendly_name">
+      Zigbee2MQTT docs
+    </a>
+  </p>
+  <p></p>
+
+  <h3>Outputs</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">string</span></dt>
+    <dd>Zigbee2MQTT state object</dd>
+    <dt>topic <span class="property-type">string</span></dt>
+    <dd>the MQTT topic, in the form of <code>${base_topic}/${topic}</code></dd>
+    <dt>retain <span class="property-type">boolean</span></dt>
+    <dd>
+      <ul>
+        <li><code>true</code> - state was received upon initial connection and did not actually change</li>
+        <li><code>false</code> - the state was updated either by last will or zigbee2mqtt itself</li>
+      </ul>
+    </dd>
+    <dt>topic <span class="property-type">string</span></dt>
+    <dd>the MQTT topic, in the form of <code>${base_topic}/bridge/state</code></dd>
+  </dl>
+</script>

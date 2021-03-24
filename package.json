@@ -68,6 +68,7 @@
     "lint-staged": "^10.5.4",
     "minimist": "^1.2.5",
     "mqtt": "^4.2.6",
+    "mqtt-packet": "^6.9.0",
     "node-red": "^1.2.9",
     "nodemon": "^2.0.7",
     "plugin-error": "^1.0.1",
@@ -88,7 +89,8 @@
       "z2m-broker": "dist/nodes/broker.js",
       "z2m-bridge-state": "dist/nodes/bridge/state.js",
       "z2m-bridge-restart": "dist/nodes/bridge/restart.js",
-      "z2m-bridge-logs": "dist/nodes/bridge/logs.js"
+      "z2m-bridge-logs": "dist/nodes/bridge/logs.js",
+      "z2m-device-in": "dist/nodes/device/in.js"
     }
   }
 }
