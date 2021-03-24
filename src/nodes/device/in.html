@@ -4,11 +4,31 @@
     icon: 'font-awesome/fa-sign-out',
     outputs: 1,
     label: function () {
-      return this.name || this.topic || 'z2m device out';
+      if (this.name.length > 0) {
+        return this.name;
+      }
+
+      let name = this.topic || 'z2m device in';
+
+      if (this.property) {
+        name = `${name} ${this.property}`;
+      }
+
+      if (this.onlyWhenChanged) {
+        name = `${name} changes`;
+      }
+
+      if (this.sendInitialValue) {
+        name = `* ${name}`;
+      }
+
+      return name;
     },
     defaults: {
       topic: { value: '', required: true },
-      initial: { value: false },
+      property: { value: '' },
+      onlyWhenChanged: { value: false },
+      sendInitialValue: { value: false },
     },
   });
 </script>
@@ -23,11 +43,37 @@
     <input type="text" id="node-input-topic" placeholder="Topic" />
   </div>
   <div class="form-row">
-    <label for="node-input-initial"><i class="fa fa-filter"></i> Options</label>
-    <label for="node-input-initial" style="width:70%">
-      <input type="checkbox" id="node-input-initial" style="display:inline-block; width:22px; vertical-align:top;" />
-      send initial value
-    </label>
+    <label for="node-input-property" style="vertical-align: top;"><i class="fa fa-tag"></i> Property</label>
+    <div style="display: inline-block; width: 70%;">
+      <input
+        type="text"
+        id="node-input-property"
+        style="width: 100%;"
+        placeholder="Leave empty to get full JSON state"
+      />
+    </div>
+  </div>
+  <div class="form-row">
+    <label style="vertical-align: top;"><i class="fa fa-filter"></i> Options</label>
+    <div style="display: inline-block; width:70%">
+      <label for="node-input-onlyWhenChanged" style="width: 100%; margin-bottom: 10px;">
+        <input
+          type="checkbox"
+          id="node-input-onlyWhenChanged"
+          style="display:inline-block; width:22px; vertical-align:top;"
+        />
+        only when changed
+      </label>
+      <label for="node-input-sendInitialValue" style="width: 100%; margin-bottom: 10px;">
+        <input
+          type="checkbox"
+          id="node-input-sendInitialValue"
+          style="display:inline-block; width:22px; vertical-align:top;"
+        />
+        send initial value
+      </label>
+      <div></div>
+    </div>
   </div>
 </script>
 
@@ -51,7 +97,7 @@
     <dt>retain <span class="property-type">boolean</span></dt>
     <dd>
       <ul>
-        <li><code>true</code> - state was received upon initial connection and did not actually change</li>
+        <li><code>true</code> - state was received upon sendInitialValue connection and did not actually change</li>
         <li><code>false</code> - the state was updated either by last will or zigbee2mqtt itself</li>
       </ul>
     </dd>
