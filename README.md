@@ -4,7 +4,7 @@ A collection on [Node-RED](https://nodered.org/) nodes interfacing with [Zigbee2
 
 Inspired by [node-red-contrib-zigbee2mqtt](https://flows.nodered.org/node/node-red-contrib-zigbee2mqtt) with following key differences:
 
-- Written in Typescript
+- Written in (mostly) Typescript
 - Uses built-in Node-RED MQTT configuration nodes
 - Uses the new [Zigbee2MQTT API](https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html)
 
