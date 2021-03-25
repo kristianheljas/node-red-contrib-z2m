@@ -31,8 +31,7 @@
     "prepare": "is-ci || node scripts/not-project-root.js || (husky install && yarn --cwd .node-red)"
   },
   "dependencies": {
-    "express": "^4.17.1",
-    "lodash": "^4.17.21"
+    "express": "^4.17.1"
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",
