@@ -1,7 +1,7 @@
 import express, { Router } from 'express';
 import type { NodeAPI } from 'node-red';
 import { PACKAGE_NAME, PACKAGE_NODES, PACKAGE_VERSION } from '../core/constants';
-import { Z2mBrokerNode, Z2mBrokerNodeDef } from '../core/z2m-broker';
+import Z2mBrokerNode, { Z2mBrokerNodeDef } from '../nodes/broker/node';
 
 const serveEditorAssets = express.static(`${__dirname}/../editor/`, {
   index: false,

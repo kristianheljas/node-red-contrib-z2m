@@ -1,6 +1,6 @@
 import type { NodeDef } from 'node-red';
 import { Node } from './node';
-import { Z2mBrokerNode } from './z2m-broker';
+import Z2mBrokerNode from '../nodes/broker/node';
 
 export * from './node';
 

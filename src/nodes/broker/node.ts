@@ -1,11 +1,11 @@
-/// <reference types="../types/node-red__nodes" />
+/// <reference types="../../types/node-red__nodes" />
 
 // eslint-disable-next-line node/no-extraneous-import
 import type { MQTTBrokerNode, MQTTMessage, SubscriptionCallback } from '@node-red/nodes/core/network/10-mqtt';
 import type { QoS } from 'mqtt';
 import type { NodeDef, NodeStatus, NodeStatusFill } from 'node-red';
-import { CheckNodeOptions, Node } from './node';
-import { Z2mBridgeInfo, Z2mBridgeState, Z2mDevice, Z2mUtil } from './util';
+import { CheckNodeOptions, Node } from '../../core/node';
+import { Z2mBridgeInfo, Z2mBridgeState, Z2mDevice, Z2mUtil } from '../../core/util';
 
 interface SubscriptionRegistry {
   [ref: string]: {
@@ -26,7 +26,7 @@ export interface Z2mBrokerNodeDef extends NodeDef {
 }
 
 @CheckNodeOptions
-export class Z2mBrokerNode extends Node<Z2mBrokerNodeDef> {
+export default class Z2mBrokerNode extends Node<Z2mBrokerNodeDef> {
   static type = 'z2m-broker';
 
   private mqtt: MQTTBrokerNode;
