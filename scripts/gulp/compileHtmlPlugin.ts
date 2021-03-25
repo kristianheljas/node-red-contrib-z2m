@@ -17,7 +17,7 @@ const exists = async (path: string): Promise<boolean> =>
 
 const transform: TransformFunction = async (file: Vinyl, encoding, callback) => {
   if (!file.isBuffer()) {
-    callback('Only buffers are supported');
+    callback(new PluginError('Only buffers are supported for ejs compilation!', __filename));
     return;
   }
 
@@ -32,12 +32,17 @@ const transform: TransformFunction = async (file: Vinyl, encoding, callback) => 
     return;
   }
 
-  const { dirname, stem } = file;
+  const { cwd, base, dirname, stem } = file;
+  const viewsPath = join(cwd, base, 'views');
 
   const templatePath = join(dirname, `${stem}.ejs`);
+  const templateData: ejs.Data = {};
+  const templateOptions: ejs.Options = {
+    views: [viewsPath],
+  };
 
   if (await exists(templatePath)) {
-    file.contents = await ejs.renderFile(templatePath).then(Buffer.from);
+    file.contents = await ejs.renderFile(templatePath, templateData, templateOptions).then(Buffer.from);
     callback(null, file);
     return;
   }
