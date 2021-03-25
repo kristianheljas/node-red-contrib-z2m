@@ -1,3 +1,6 @@
+# EJS templates
+*.ejs
+
 # NPM dependencies
 /node_modules
 
