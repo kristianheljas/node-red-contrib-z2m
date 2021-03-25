@@ -6,6 +6,7 @@ import minimist from 'minimist';
 import nodemon from 'nodemon';
 import rimraf from 'rimraf';
 import { TaskFunction } from 'undertaker';
+import compileHtmlPlugin from './compileHtmlPlugin';
 
 const argv = minimist(process.argv.slice(2));
 
@@ -37,7 +38,8 @@ export const buildFrontend: TaskFunction = () => spawn(webpackBin, webpackArgs, 
 
 export const buildTypescript: TaskFunction = () => spawn(tscBin, tscArgs, { stdio });
 
-export const copyHtml: TaskFunction = () => src('src/**/*.html').pipe(dest('dist'));
+export const compileHtml: TaskFunction = () =>
+  src(['./src/nodes/**/index.ts'], { base: 'src' }).pipe(compileHtmlPlugin()).pipe(dest('dist'));
 
 /* #endregion */
 /* #region Development tasks */
@@ -63,7 +65,7 @@ export const watchTypescript: TaskFunction = () =>
     },
   );
 
-export const watchHtml: TaskFunction = () => watch('src/**/*.html', { ignoreInitial: false }, copyHtml);
+export const watchHtml: TaskFunction = () => watch('src/nodes/**/*', { ignoreInitial: false }, compileHtml);
 
 export const waitForBuild: TaskFunction = async () => {
   // Waits for initial watcher process to finish building the first time
@@ -97,5 +99,5 @@ export const startDevServer: TaskFunction = (done) => {
 
 /* #endregion */
 
-export const buildAll = parallel(buildTypescript, buildFrontend, copyHtml);
+export const buildAll = parallel(buildTypescript, buildFrontend, compileHtml);
 export const watchAll = parallel(watchTypescript, watchFrontend, watchHtml);

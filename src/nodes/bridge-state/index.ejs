@@ -1,8 +1,4 @@
 <script type="text/html" data-template-name="z2m-bridge-state">
-  <div class="form-row" style="height: 34px;">
-    <label for="node-input-broker"><i class="fa fa-globe"></i> Z2M Broker</label>
-    <input type="text" id="node-input-broker" />
-  </div>
   <div class="form-row">
     <label for="node-input-initial"><i class="fa fa-filter"></i> Options</label>
     <label for="node-input-initial" style="width:70%">
@@ -10,10 +6,7 @@
       include initial (retained) value
     </label>
   </div>
-  <div class="form-row">
-    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-    <input type="text" id="node-input-name" placeholder="Name" />
-  </div>
+  <%- include('../../templates/form-row-broker') %> <%- include('../../templates/form-row-name') %>
 </script>
 
 <script type="text/html" data-help-name="z2m-bridge-state">

@@ -1,12 +1,9 @@
 <script type="text/html" data-template-name="z2m-device-out">
-  <div class="form-row" style="height: 34px;">
-    <label for="node-input-broker"><i class="fa fa-globe"></i> Z2M Broker</label>
-    <input type="text" id="node-input-broker" />
-  </div>
   <div class="form-row">
     <label for="node-input-topic"><i class="fa fa-tag"></i> Topic</label>
     <input type="text" id="node-input-topic" placeholder="Topic" />
   </div>
+  <%- include('../../templates/form-row-broker') %> <%- include('../../templates/form-row-name') %>
 </script>
 
 <script type="text/html" data-help-name="z2m-device-out">
