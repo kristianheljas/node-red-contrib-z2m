@@ -1,3 +1,5 @@
+/// <reference types="../types/node-red__nodes" />
+
 // eslint-disable-next-line node/no-extraneous-import
 import type { MQTTBrokerNode, MQTTMessage, SubscriptionCallback } from '@node-red/nodes/core/network/10-mqtt';
 import type { QoS } from 'mqtt';

@@ -1,3 +1,5 @@
+/// <reference types="../types/zigbee2mqtt" />
+
 export type Z2mBridgeState = 'online' | 'offline';
 
 export interface Z2mBridgeInfo {
