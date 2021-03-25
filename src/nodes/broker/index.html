@@ -1,21 +1,3 @@
-<script type="text/javascript">
-  RED.nodes.registerType('z2m-broker', {
-    category: 'config',
-    defaults: {
-      name: { value: '' },
-      broker: { type: 'mqtt-broker', required: true },
-      topic: { value: 'zigbee2mqtt', required: true },
-    },
-    label: function () {
-      if (this.name) {
-        return this.name;
-      }
-      const mqttBrokerLabel = RED.utils.getNodeLabel(RED.nodes.node(this.broker));
-      return `${mqttBrokerLabel} / ${this.topic}`;
-    },
-  });
-</script>
-
 <script type="text/html" data-template-name="z2m-broker">
   <div class="form-row">
     <label for="node-config-input-broker"> <i class="fa fa-globe"></i> Server </label>

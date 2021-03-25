@@ -17,7 +17,7 @@ const stdio = 'inherit';
 const binFolder = './node_modules/.bin/';
 
 const webpackBin = `${binFolder}/webpack`;
-const webpackArgs = ['--config', argv.project || 'webpack.config.js'];
+const webpackArgs = ['--config', argv.project || 'webpack.config.ts'];
 
 const tscBin = `${binFolder}/tsc`;
 const tscArgs = ['--project', argv.project || 'tsconfig.build.json'];

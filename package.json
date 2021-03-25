@@ -91,13 +91,13 @@
   },
   "node-red": {
     "nodes": {
-      "z2m-api": "dist/nodes/api.js",
-      "z2m-broker": "dist/nodes/broker.js",
-      "z2m-bridge-state": "dist/nodes/bridge/state.js",
-      "z2m-bridge-restart": "dist/nodes/bridge/restart.js",
-      "z2m-bridge-logs": "dist/nodes/bridge/logs.js",
-      "z2m-device-in": "dist/nodes/device/in.js",
-      "z2m-device-out": "dist/nodes/device/out.js"
+      "z2m-core": "dist/nodes/core.js",
+      "z2m-broker": "dist/nodes/broker/index.js",
+      "z2m-bridge-state": "dist/nodes/bridge-state/index.js",
+      "z2m-bridge-restart": "dist/nodes/bridge-restart/index.js",
+      "z2m-bridge-logs": "dist/nodes/bridge-logs/index.js",
+      "z2m-device-in": "dist/nodes/device-in/index.js",
+      "z2m-device-out": "dist/nodes/device-out/index.js"
     }
   }
 }

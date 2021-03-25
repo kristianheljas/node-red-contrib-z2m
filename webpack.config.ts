@@ -1,13 +1,15 @@
-const path = require('path');
+import globby from 'globby';
+import path from 'path';
+import { Configuration } from 'webpack';
 
 module.exports = {
   mode: 'development',
   entry: {
-    main: './src/frontend',
+    nodes: globby.sync('./src/nodes/**/editor.ts'),
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'frontend/[name].js',
+    filename: 'editor/[name].js',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
@@ -26,4 +28,4 @@ module.exports = {
       },
     ],
   },
-};
+} as Configuration;

@@ -18,6 +18,7 @@ declare module '@node-red/editor-client' {
 }
 
 declare global {
+  const RED: RED;
   namespace Editor {
     export { RED, NodeDef, NodeProperties, NodeCredential };
   }

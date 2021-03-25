@@ -3,7 +3,7 @@ import type { NodeAPI } from 'node-red';
 import { PACKAGE_NAME, PACKAGE_NODES, PACKAGE_VERSION } from '../core/constants';
 import { Z2mBrokerNode, Z2mBrokerNodeDef } from '../core/z2m-broker';
 
-const serveStaticAssets = express.static(`${__dirname}/../frontend/`, {
+const serveEditorAssets = express.static(`${__dirname}/../editor/`, {
   index: false,
   redirect: false,
   extensions: ['js', 'png', 'svg'],
@@ -31,7 +31,7 @@ export class Z2mApi {
   }
 
   private setupRoutes() {
-    this.router.use('/assets', serveStaticAssets);
+    this.router.use('/editor', serveEditorAssets);
 
     this.router.get('/info', (_req, res) => {
       res.json(this.info());
