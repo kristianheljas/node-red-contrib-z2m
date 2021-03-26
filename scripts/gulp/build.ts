@@ -89,7 +89,6 @@ export const startDevServer: TaskFunction = (done) => {
     ext: '*',
     script: `${nodeRedBin}`,
     args: ['--userDir', '.node-red'],
-    stdin: false,
     delay: 1000,
   });
 
