@@ -3,6 +3,13 @@ import type { NodeAPI } from 'node-red';
 import { PACKAGE_NAME, PACKAGE_NODES, PACKAGE_VERSION } from '../core/constants';
 import Z2mBrokerNode, { Z2mBrokerNodeDef } from '../nodes/broker/node';
 
+export interface Z2mPackageInfo {
+  name: string;
+  version: string;
+  nodeTypes: string[];
+  brokers: Exclude<Z2mBrokerNodeDef, 'z'>[];
+}
+
 const serveEditorAssets = express.static(`${__dirname}/../editor/`, {
   index: false,
   redirect: false,
@@ -12,17 +19,14 @@ const serveEditorAssets = express.static(`${__dirname}/../editor/`, {
 export class Z2mApi {
   private router: Router;
 
-  private packageInfo: {
-    name: string;
-    version: string;
-    nodeTypes: string[];
-  };
+  private packageInfo: Z2mPackageInfo;
 
   constructor(private red: NodeAPI) {
     this.packageInfo = {
       name: PACKAGE_NAME,
       version: PACKAGE_VERSION,
       nodeTypes: Object.keys(PACKAGE_NODES).filter((type) => type !== 'z2m-api'),
+      brokers: [],
     };
 
     this.router = Router();

@@ -31,6 +31,7 @@ const transform: TransformFunction = async (file: Vinyl, encoding, callback) => 
 
   const { cwd, base, dirname, stem } = file;
   const viewsPath = join(cwd, base, 'views');
+  const editorViewsPath = join(cwd, base, 'editor');
 
   const nodePath = join(dirname, 'node.ts');
   const node = require(nodePath).default; // eslint-disable-line
@@ -38,7 +39,7 @@ const transform: TransformFunction = async (file: Vinyl, encoding, callback) => 
   const templatePath = join(dirname, `${stem}.ejs`);
   const templateData: ejs.Data = { node };
   const templateOptions: ejs.Options = {
-    views: [dirname, viewsPath],
+    views: [dirname, editorViewsPath, viewsPath],
   };
 
   try {

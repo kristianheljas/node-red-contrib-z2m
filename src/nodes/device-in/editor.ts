@@ -1,4 +1,14 @@
 import { Registrator, defaults } from '../../editor/registrator';
+import DeviceSelector from '../../editor/forms/device-selector';
+
+// eslint-disable-next-line promise/catch-or-return
+$.when($.ready).then(() => {
+  const node = RED.nodes.node('25f4695.b4ef496');
+  // eslint-disable-next-line promise/always-return
+  if (node) {
+    RED.editor.edit(node);
+  }
+});
 
 Registrator.registerType('z2m-device-in', {
   paletteLabel: 'z2m device',
@@ -10,6 +20,9 @@ Registrator.registerType('z2m-device-in', {
     property: { value: '' },
     onlyWhenChanged: { value: false },
     sendInitialValue: { value: false },
+  },
+  oneditprepare() {
+    DeviceSelector.create(this, 'node-input-topic');
   },
   label() {
     if (this.name.length > 0) {

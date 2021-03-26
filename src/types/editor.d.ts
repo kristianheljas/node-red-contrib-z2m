@@ -3,6 +3,7 @@ import type {
   EditorNodeDef as NodeDef,
   EditorNodeProperties as NodeProperties,
   EditorNodeCredentials as NodeCredential,
+  EditorNodeInstance as NodeInstance,
 } from 'node-red';
 
 declare module '@node-red/editor-client' {
@@ -20,6 +21,6 @@ declare module '@node-red/editor-client' {
 declare global {
   const RED: RED;
   namespace Editor {
-    export { RED, NodeDef, NodeProperties, NodeCredential };
+    export { RED, NodeDef, NodeProperties, NodeCredential, NodeInstance };
   }
 }

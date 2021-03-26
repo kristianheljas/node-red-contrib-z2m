@@ -1,4 +1,5 @@
-import { Registrator, defaults } from '../../editor/registrator';
+import DeviceSelector from '../../editor/forms/device-selector';
+import { defaults, Registrator } from '../../editor/registrator';
 
 Registrator.registerType('z2m-device-out', {
   paletteLabel: 'z2m device',
@@ -8,6 +9,9 @@ Registrator.registerType('z2m-device-out', {
   defaults: {
     ...defaults,
     topic: { value: '', required: true },
+  },
+  oneditprepare() {
+    DeviceSelector.create(this, 'node-input-topic');
   },
   label() {
     return this.name || this.topic || 'z2m device out';
