@@ -21,7 +21,7 @@ export default class Z2mDeviceInNode extends Z2mNode<Z2mDeviceOutNodeDef> {
 
   private preparePayload(state: Z2mDeviceState) {
     if (this.config.property) {
-      return state[this.config.property] ?? null;
+      return state[this.config.property];
     }
     return state;
   }
@@ -31,6 +31,12 @@ export default class Z2mDeviceInNode extends Z2mNode<Z2mDeviceOutNodeDef> {
 
     const lastPayload = this.preparePayload(this.lastState);
     const payload = this.preparePayload(state);
+
+    // Sometimes devices publish only select properites so lets skip if one wasn't provided
+    // For example battery state update might not send action property
+    if (payload === undefined) {
+      return;
+    }
 
     let shouldSend = true;
 
