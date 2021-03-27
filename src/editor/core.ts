@@ -1,3 +1,3 @@
 import './styles/core.scss';
-import './util';
-import './registrator';
+import './shared/util';
+import './shared/registrator';

@@ -1,4 +1,4 @@
-import { Registrator, defaults } from '../../editor/registrator';
+import { Registrator, defaults } from '../../editor/shared/registrator';
 
 Registrator.registerType('z2m-bridge-restart', {
   paletteLabel: 'restart z2m',

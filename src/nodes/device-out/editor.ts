@@ -1,5 +1,5 @@
 import DeviceSelector from '../../editor/forms/device-selector';
-import { defaults, Registrator } from '../../editor/registrator';
+import { defaults, Registrator } from '../../editor/shared/registrator';
 
 Registrator.registerType('z2m-device-out', {
   paletteLabel: 'z2m device',

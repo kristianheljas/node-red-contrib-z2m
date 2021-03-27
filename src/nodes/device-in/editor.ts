@@ -1,4 +1,4 @@
-import { Registrator, defaults } from '../../editor/registrator';
+import { Registrator, defaults } from '../../editor/shared/registrator';
 import DeviceSelector from '../../editor/forms/device-selector';
 
 // eslint-disable-next-line promise/catch-or-return
