@@ -63,7 +63,9 @@ export class Z2mApi {
     }
 
     throw new Error(
-      `Node ID '${brokerId}' does not refer to a '${Z2mBrokerNode.type}' node, got '${broker.type}' instead!`,
+      `Node ID '${brokerId}' does not refer to a '${Z2mBrokerNode.type}' node, got '${
+        broker?.type ?? 'undefined'
+      }' instead!`,
     );
   }
 
@@ -75,7 +77,9 @@ export class Z2mApi {
     }
 
     throw new Error(
-      `Node ID '${brokerId}' does not refer to a '${Z2mBrokerNode.type}' node, got '${broker.type}' instead!`,
+      `Node ID '${brokerId}' does not refer to a '${Z2mBrokerNode.type}' node, got '${
+        broker?.type ?? 'undefined'
+      }' instead!`,
     );
   }
 
