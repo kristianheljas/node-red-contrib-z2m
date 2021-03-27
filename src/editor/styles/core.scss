@@ -1,0 +1,18 @@
+.selectize-dropdown,
+.selectize-input,
+.selectize-input input {
+  font-size: inherit;
+}
+
+.selectize-control {
+  .option {
+    .title,
+    .caption {
+      display: block;
+    }
+    .caption {
+      font-size: 12px;
+      color: #a0a0a0;
+    }
+  }
+}

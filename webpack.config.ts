@@ -5,7 +5,18 @@ import { Configuration } from 'webpack';
 module.exports = {
   mode: 'development',
   entry: {
-    nodes: globby.sync('./src/nodes/**/editor.ts'),
+    vendor: './src/editor/vendor.ts',
+    core: {
+      import: './src/editor/core.ts',
+      dependOn: 'vendor',
+    },
+    nodes: {
+      import: globby.sync('./src/nodes/**/editor.ts'),
+      dependOn: 'core',
+    },
+  },
+  externals: {
+    jquery: 'jQuery',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -25,6 +36,14 @@ module.exports = {
             presets: ['@babel/preset-env', '@babel/preset-typescript'],
           },
         },
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
     ],
   },

@@ -65,7 +65,8 @@ export const watchTypescript: TaskFunction = () =>
     },
   );
 
-export const watchHtml: TaskFunction = () => watch('src/nodes/**/*', { ignoreInitial: false }, compileHtml);
+export const watchHtml: TaskFunction = () =>
+  watch(['src/nodes/**/*', 'src/**/*.ejs'], { ignoreInitial: false }, compileHtml);
 
 export const waitForBuild: TaskFunction = async () => {
   // Waits for initial watcher process to finish building the first time
