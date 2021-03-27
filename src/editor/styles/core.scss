@@ -1,10 +1,27 @@
-.selectize-dropdown,
-.selectize-input,
-.selectize-input input {
-  font-size: inherit;
-}
-
 .selectize-control {
+  /* MAKE ROWS CONSISTENT */
+
+  &.single {
+    // Overrides "phantom" whitespace
+    // Also makes height not jump when opening dropdown
+    height: 34px;
+  }
+
+  .selectize-input {
+    // account for border
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+
+  .selectize-dropdown,
+  .selectize-input,
+  .selectize-input input {
+    // Node-RED default is 14px instead of 13px
+    font-size: inherit;
+  }
+
+  /* CUSTOM STYLING OPTIONS */
+
   .option {
     .title,
     .caption {
@@ -13,6 +30,57 @@
     .caption {
       font-size: 12px;
       color: #a0a0a0;
+    }
+  }
+}
+
+.node-red-contrib-z2m-edit-container {
+  /* MAKE ROWS CONSISTENT */
+  .control-group {
+    // For example "config" rows have absolute positioning which make the container small
+    min-height: 34px;
+
+    // Node-RED conventions
+
+    margin-bottom: 12px !important;
+
+    .control-label {
+      line-height: 24px;
+      width: 100px;
+      text-align: left;
+    }
+    .controls {
+      width: 70%;
+      margin-left: 100px;
+
+      // Fix config selector width when inside another div
+      &.config-controls > div {
+        display: block !important;
+        width: auto !important;
+      }
+
+      // Make all inputs expand full-width by default
+      select,
+      textarea,
+      input[type='text'],
+      input[type='password'],
+      input[type='datetime'],
+      input[type='datetime-local'],
+      input[type='date'],
+      input[type='month'],
+      input[type='time'],
+      input[type='week'],
+      input[type='number'],
+      input[type='email'],
+      input[type='url'],
+      input[type='search'],
+      input[type='tel'],
+      input[type='color'],
+      div[contenteditable='true'],
+      .uneditable-input,
+      .placeholder-input {
+        width: 100%;
+      }
     }
   }
 }

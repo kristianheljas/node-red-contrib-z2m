@@ -1,30 +1,21 @@
 <%- include('forms/device-selector') %>
-<div class="form-row">
-  <label for="node-input-property" style="vertical-align: top"><i class="fa fa-tag"></i> Property</label>
-  <div style="display: inline-block; width: 70%">
-    <input type="text" id="node-input-property" style="width: 100%" placeholder="Leave empty to get full JSON state" />
+<div class="control-group">
+  <label class="control-label" for="node-input-property"><i class="fa fa-tag"></i> Property</label>
+  <div class="controls">
+    <input type="text" id="node-input-property" placeholder="Leave empty to get full JSON state" />
   </div>
 </div>
-<div class="form-row">
-  <label style="vertical-align: top"><i class="fa fa-filter"></i> Options</label>
-  <div style="display: inline-block; width: 70%">
-    <label for="node-input-onlyWhenChanged" style="width: 100%; margin-bottom: 10px">
-      <input
-        type="checkbox"
-        id="node-input-onlyWhenChanged"
-        style="display: inline-block; width: 22px; vertical-align: top"
-      />
+<div class="control-group">
+  <label class="control-label" style="vertical-align: top"><i class="fa fa-filter"></i> Options</label>
+  <div class="controls">
+    <label class="checkbox">
+      <input type="checkbox" id="node-input-onlyWhenChanged" />
       only when changed
     </label>
-    <label for="node-input-sendInitialValue" style="width: 100%; margin-bottom: 10px">
-      <input
-        type="checkbox"
-        id="node-input-sendInitialValue"
-        style="display: inline-block; width: 22px; vertical-align: top"
-      />
+    <label class="checkbox">
+      <input type="checkbox" id="node-input-sendInitialValue" />
       send initial value
     </label>
-    <div></div>
   </div>
 </div>
 <%- include('form-row-broker') %> <%- include('form-row-name') %>

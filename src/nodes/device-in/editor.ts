@@ -1,15 +1,6 @@
 import { Registrator, defaults } from '../../editor/shared/registrator';
 import DeviceSelector from '../../editor/forms/device-selector';
 
-// eslint-disable-next-line promise/catch-or-return
-$.when($.ready).then(() => {
-  const node = RED.nodes.node('25f4695.b4ef496');
-  // eslint-disable-next-line promise/always-return
-  if (node) {
-    RED.editor.edit(node);
-  }
-});
-
 Registrator.registerType('z2m-device-in', {
   paletteLabel: 'z2m device',
   icon: 'font-awesome/fa-sign-out',
