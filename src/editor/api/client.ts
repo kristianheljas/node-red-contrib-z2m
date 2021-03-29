@@ -4,24 +4,29 @@ import type { Z2mBridgeInfo, Z2mDevice } from '../../core/util';
 export class ApiClient {
   constructor(public baseUrl: string) {}
 
-  get(url: string): JQuery.jqXHR {
+  async get<T>(url: string): Promise<T> {
     const normalizedUrl = url.replace(/^\/+/, '');
-    return $.getJSON(`${this.baseUrl}/${normalizedUrl}`).fail((jqXHR, status, message) => {
-      // eslint-disable-next-line no-console
-      console.error({ message, status, jqXHR });
-      throw Error(`Error querying api: ${message}`);
+    return new Promise((resolve, reject) => {
+      $.ajax(`${this.baseUrl}/${normalizedUrl}`, {
+        dataType: 'json',
+        success: (data) => resolve(data),
+        error: (jqXHR, textStatus, errorThrown) => {
+          const message = jqXHR.responseJSON?.message || errorThrown || textStatus;
+          reject(new Error(message));
+        },
+      });
     });
   }
 
-  getPluginInfo(): JQuery.jqXHR<Z2mPackageInfo> {
+  getPluginInfo(): Promise<Z2mPackageInfo> {
     return this.get('info');
   }
 
-  getBrokerInfo(brokerId: string): JQuery.jqXHR<Z2mBridgeInfo> {
+  getBrokerInfo(brokerId: string): Promise<Z2mBridgeInfo> {
     return this.get(`broker/${brokerId}`);
   }
 
-  getBrokerDevices(brokerId: string): JQuery.jqXHR<Z2mDevice[]> {
+  getBrokerDevices(brokerId: string): Promise<Z2mDevice[]> {
     return this.get(`broker/${brokerId}/devices`);
   }
 }

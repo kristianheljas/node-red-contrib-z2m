@@ -7,6 +7,10 @@
     height: 34px;
   }
 
+  input[type='text'] {
+    height: auto;
+  }
+
   .selectize-input {
     // account for border
     padding-top: 7px;

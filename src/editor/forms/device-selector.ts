@@ -1,76 +1,130 @@
 import type { Z2mDevice } from '../../core/util';
+import { mirrorElementClass, onConfigChanged } from '../shared/util';
 import API from '../api/client';
+
+interface SelectDeviceOption {
+  value: string;
+  text: string;
+  disabled?: boolean;
+  device?: Z2mDevice;
+}
 
 export interface DeviceSelectorProps extends Editor.NodeProperties {
   topic: string;
   broker: string;
 }
 
+const defaultNodeSetupOptions = {
+  inputSelector: '#node-input-topic',
+  brokerSelector: '#node-input-broker',
+};
+
 export default class DeviceSelector {
   $input: JQuery<HTMLInputElement>;
 
-  $select: JQuery<HTMLSelectElement>;
+  selectize: Selectize.IApi<string, SelectDeviceOption>;
 
-  static create(node: Editor.NodeInstance<DeviceSelectorProps>, inputId: string): DeviceSelector {
-    return new this(node, inputId);
+  constructor(inputOrSelector: string | JQuery<HTMLInputElement>) {
+    this.$input = typeof inputOrSelector === 'string' ? $<HTMLInputElement>(inputOrSelector) : inputOrSelector;
+    this.selectize = this.setupSelectize();
   }
 
-  constructor(private node: Editor.NodeInstance<DeviceSelectorProps>, inputId: string) {
-    const inputSelector = `#${inputId}`;
-    this.$input = $(inputSelector);
+  private setupSelectize() {
+    const { $input } = this;
 
-    if (this.$input.length === 0) {
-      throw new Error(`Did not find any input elements for '${inputSelector}'`);
-    }
+    $input.selectize({
+      placeholder: 'Select broker first',
+      maxItems: 1,
+      options: [],
+      items: [],
+      render: {
+        item(option: SelectDeviceOption, escape) {
+          if (option.device) {
+            const { topic, description } = option.device;
+            return `<div class="item">${escape(topic)} (${escape(description)})</div>`;
+          }
+          return `<div class="item">${escape(option.text)}</div>`;
+        },
+        option(option: SelectDeviceOption, escape) {
+          if (option.device) {
+            const { topic, description } = option.device;
+            return `<div class="option">
+              <span class="title">${escape(topic)}</span>
+              <span class="caption">${escape(description)}</span>
+            </div>`;
+          }
+          return `<div class="item">${escape(option.text)}</div>`;
+        },
+      },
+    });
 
-    const selectSelector = `#${inputId}-selector`;
-    this.$select = $(selectSelector);
+    const { selectize } = this.$input[0];
 
-    if (this.$select.length === 0) {
-      throw new Error(`Did not find any select elements for '${inputSelector}'`);
-    }
+    mirrorElementClass($input[0], selectize.$control[0], 'input-error');
 
-    this.setup();
-    this.refreshDevices();
+    return selectize;
   }
 
-  private setup() {
-    const { $input, $select } = this;
-    $select.on('change', () => {
-      const selected = $select.val() || '';
-      $input.val(selected);
+  setPlaceholder(placeholder: string): void {
+    this.selectize.settings.placeholder = placeholder;
+    this.selectize.updatePlaceholder();
+  }
+
+  async loadBrokerDevices(brokerId: string): Promise<void> {
+    const { selectize } = this;
+
+    const selectedValue = selectize.getValue();
+
+    this.selectize.disable();
+    this.selectize.clear();
+    this.selectize.clearOptions();
+
+    if (!brokerId || brokerId === '_ADD_') {
+      this.setPlaceholder('Select broker first');
+      return;
+    }
+
+    this.setPlaceholder('Loading devices...');
+
+    selectize.load(async (setOptionsCallback) => {
+      const devices = await API.getBrokerDevices(brokerId).catch((error) => {
+        this.setPlaceholder(error?.message || 'Error loading devices');
+        return null;
+      });
+
+      if (devices === null) return;
+
+      const options = devices.map((device) => ({
+        text: `${device.topic} (${device.description})`,
+        value: device.topic,
+        device,
+      }));
+
+      setOptionsCallback(options);
+
+      selectize.setValue(selectedValue);
+      selectize.enable();
+
+      this.setPlaceholder('Select device');
     });
   }
 
-  refreshDevices(): void {
-    const { $input, $select } = this;
-    const selectedTopic = $input.val() as string;
+  static setupForNode(
+    node: DeviceSelectorProps,
+    options: Partial<typeof defaultNodeSetupOptions> = {},
+  ): DeviceSelector {
+    const { inputSelector, brokerSelector } = { ...defaultNodeSetupOptions, ...options };
 
-    API.getBrokerDevices(this.node.broker)
-      .then((devices) => {
-        $select.prop('disabled', false).selectize({
-          valueField: 'topic',
-          labelField: 'topic',
-          options: devices,
-          items: [selectedTopic],
-          render: {
-            item(device, escape) {
-              const { topic, description } = device;
-              return `<div class="item">${escape(topic)} (${escape(description)})</div>`;
-            },
-            option(device, escape) {
-              const { topic, description } = device;
-              return `<div class="option">
-                <span class="title">${escape(topic)}</span>
-                <span class="caption">${escape(description)}</span>
-              </div>`;
-            },
-          },
-        } as Selectize.IOptions<string, Z2mDevice>);
-        return devices;
-      })
-      .catch((...args) => {
-        console.error('Fetching devices failed', args);
-      });
+    const deviceSelector = new DeviceSelector(inputSelector);
+
+    if (node.broker) {
+      deviceSelector.loadBrokerDevices(node.broker);
+    }
+
+    onConfigChanged(brokerSelector, (brokerId) => {
+      deviceSelector.loadBrokerDevices(brokerId);
+    });
+
+    return deviceSelector;
   }
 }

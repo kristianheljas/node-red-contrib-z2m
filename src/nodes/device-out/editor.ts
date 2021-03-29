@@ -11,7 +11,7 @@ Registrator.registerType('z2m-device-out', {
     topic: { value: '', required: true },
   },
   oneditprepare() {
-    DeviceSelector.create(this, 'node-input-topic');
+    DeviceSelector.setupForNode(this);
   },
   label() {
     return this.name || this.topic || 'z2m device out';

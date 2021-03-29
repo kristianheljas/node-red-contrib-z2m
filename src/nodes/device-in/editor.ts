@@ -13,7 +13,7 @@ Registrator.registerType('z2m-device-in', {
     sendInitialValue: { value: false },
   },
   oneditprepare() {
-    DeviceSelector.create(this, 'node-input-topic');
+    DeviceSelector.setupForNode(this);
   },
   label() {
     if (this.name.length > 0) {
