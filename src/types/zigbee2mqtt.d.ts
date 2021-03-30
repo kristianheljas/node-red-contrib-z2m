@@ -5,6 +5,7 @@ interface Zigbee2MqttDeviceDefinition {
   model: string;
   vendor: string;
   description: string;
+  exposes: Zigbee2Mqtt.Expose[];
 }
 
 interface Zigbee2MqttDeviceEndpoint {
