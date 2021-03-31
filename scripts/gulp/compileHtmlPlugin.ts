@@ -6,6 +6,7 @@ import PluginError from 'plugin-error';
 import { Transform } from 'stream';
 import through, { TransformFunction } from 'through2';
 import Vinyl from 'vinyl';
+import { PACKAGE_NAME, PACKAGE_VERSION } from '../../src/core/constants';
 
 const { stat, readFile } = fs.promises;
 
@@ -37,7 +38,14 @@ const transform: TransformFunction = async (file: Vinyl, encoding, callback) => 
   const node = require(nodePath).default; // eslint-disable-line
 
   const templatePath = join(dirname, `${stem}.ejs`);
-  const templateData: ejs.Data = { node };
+
+  const templateData: ejs.Data = {
+    PACKAGE_NAME,
+    PACKAGE_VERSION,
+    env: process.env,
+    node,
+  };
+
   const templateOptions: ejs.Options = {
     views: [dirname, editorViewsPath, viewsPath],
   };
