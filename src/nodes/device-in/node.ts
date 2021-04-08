@@ -27,8 +27,25 @@ export default class Z2mDeviceInNode extends Z2mNode<Z2mDeviceOutNodeDef> {
   }
 
   private onStateMessage(topic: string, buffer: Buffer, { retain, qos }: IPublishPacket) {
-    const state = JSON.parse(buffer.toString()) as Z2mDeviceState;
+    const mqttPayload = buffer.toString();
 
+    if (mqttPayload === '') {
+      this.warn(`Received empty payload from '${topic}', the device most likely got deleted or renamed`);
+      return;
+    }
+
+    // Decode JSON payload
+    let state: Z2mDeviceState;
+    try {
+      state = JSON.parse(mqttPayload) as Z2mDeviceState;
+    } catch (error) {
+      this.error(`Unable to decode state payload from '${topic}'`, {
+        payload: { error, mqttPayload },
+      });
+      return;
+    }
+
+    // Extract payload from state
     const lastPayload = this.preparePayload(this.lastState);
     const payload = this.preparePayload(state);
 

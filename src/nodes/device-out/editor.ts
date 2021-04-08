@@ -11,7 +11,8 @@ Registrator.registerType('z2m-device-out', {
     topic: { value: '', required: true },
   },
   oneditprepare() {
-    DeviceSelector.setupForNode(this);
+    const deviceSelector = new DeviceSelector(this);
+    deviceSelector.attachBrokerSelect('#node-input-broker');
   },
   label() {
     return this.name || this.topic || 'z2m device out';

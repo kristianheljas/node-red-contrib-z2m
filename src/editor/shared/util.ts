@@ -3,7 +3,7 @@ const MutationObserver = window.MutationObserver || window.WebKitMutationObserve
 export function mirrorElementClass(source: Element, target: Element, mirrorClassName: string | string[]): void {
   const mirrorClassNames = typeof mirrorClassName === 'string' ? [mirrorClassName] : mirrorClassName;
 
-  const updateTarget = (sourceClasses: DOMTokenList) => {
+  const updateTargetClasses = (sourceClasses: DOMTokenList) => {
     mirrorClassNames.forEach((className) => {
       if (sourceClasses.contains(className)) {
         target.classList.add(className);
@@ -13,14 +13,18 @@ export function mirrorElementClass(source: Element, target: Element, mirrorClass
     });
   };
 
+  // Setup observer for source element class changes
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       if (mutation.type === 'attributes' && mutation.attributeName === 'class' && mutation.target instanceof Element) {
-        updateTarget(mutation.target.classList);
+        updateTargetClasses(mutation.target.classList);
       }
     });
   });
   observer.observe(source, { attributes: true, attributeFilter: ['class'] });
+
+  // And update right away
+  updateTargetClasses(source.classList);
 }
 
 export function onConfigChanged(inputSelector: string, callback: (configNodeId: string) => void): void {

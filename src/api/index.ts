@@ -90,6 +90,9 @@ export class Z2mApi {
     const broker = this.red.nodes.getNode(brokerId);
 
     if (broker instanceof Z2mBrokerNode) {
+      if (broker.state !== 'online') {
+        throw new Error(`Broker state is '${broker.state}', excpected 'online'!`);
+      }
       return broker.devices;
     }
 
