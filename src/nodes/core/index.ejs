@@ -1,0 +1,21 @@
+<script src="/node-red-contrib-z2m/editor/vendor.js"></script>
+<script src="/node-red-contrib-z2m/editor/core.js"></script>
+<script src="/node-red-contrib-z2m/editor/nodes.js"></script>
+<% if (env.NODE_ENV === 'development') { %>
+<script>
+  (function () {
+    // Automatically reload frontend once core node is started, happens at (re)start
+    const prefix = '<%= PACKAGE_NAME %>';
+    let lastReload = 0;
+    console.info(`Subscribing to '${prefix}/core/start' for automatic reload`);
+    RED.comms.subscribe(`${prefix}/core/start`, (topic, reloadTime) => {
+      if (lastReload !== 0 && lastReload !== reloadTime) {
+        window.onbeforeunload = () => null;
+        $(window).off('beforeunload');
+        window.location.reload();
+      }
+      lastReload = reloadTime;
+    });
+  })();
+</script>
+<% } %>

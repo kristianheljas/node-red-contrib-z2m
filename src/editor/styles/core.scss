@@ -1,0 +1,162 @@
+.select2-container {
+  // Make look like node-red
+  .select2-selection--single {
+    height: 34px;
+
+    .select2-selection__rendered {
+      line-height: 34px;
+    }
+
+    .select2-selection__arrow {
+      height: 32px;
+    }
+  }
+
+  // Remove black border on focus
+  .select2-selection:focus {
+    outline: none;
+  }
+
+  .select2-selection .subtext {
+    font-size: 12px;
+    vertical-align: middle;
+  }
+
+  .select2-results__option .subtext {
+    font-size: 12px;
+    line-height: 14px;
+  }
+
+  .select2-results__option--highlighted {
+    .muted,
+    .text-info,
+    .text-success,
+    .text-warning,
+    .text-error {
+      color: #ddd !important;
+    }
+  }
+}
+
+.select2-dropdown {
+  .select2-search__field {
+    // Override Node-RED
+    margin: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    height: 28px !important;
+    font-size: 12px !important;
+  }
+
+  .select2-results__options {
+    // Override Node-RED
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+.node-red-contrib-z2m-edit-container {
+  /* MAKE ROWS CONSISTENT */
+  .control-group {
+    // For example "config" rows have absolute positioning which make the container small
+    min-height: 34px;
+
+    .help-block {
+      display: block;
+      font-size: 12px;
+    }
+
+    // Node-RED conventions
+
+    margin-bottom: 12px !important;
+
+    .control-label {
+      line-height: 24px;
+      width: 100px;
+      text-align: left;
+    }
+    .controls {
+      width: 70%;
+      margin-left: 100px;
+
+      // Fix config selector width when inside another div
+      &.config-controls > div {
+        display: block !important;
+        width: auto !important;
+      }
+
+      // Make all inputs expand full-width by default
+      select,
+      textarea,
+      input[type='text'],
+      input[type='password'],
+      input[type='datetime'],
+      input[type='datetime-local'],
+      input[type='date'],
+      input[type='month'],
+      input[type='time'],
+      input[type='week'],
+      input[type='number'],
+      input[type='email'],
+      input[type='url'],
+      input[type='search'],
+      input[type='tel'],
+      input[type='color'],
+      div[contenteditable='true'],
+      .uneditable-input,
+      .placeholder-input {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.node-red-contrib-z2m-edit-container,
+.node-red-contrib-z2m-select2 {
+  /* From bootstrap 2.3.2 (added !important) */
+
+  .muted {
+    color: #999999 !important;
+  }
+
+  a.muted:hover,
+  a.muted:focus {
+    color: #808080 !important;
+  }
+
+  .text-warning {
+    color: #c09853 !important;
+  }
+
+  a.text-warning:hover,
+  a.text-warning:focus {
+    color: #a47e3c !important;
+  }
+
+  .text-error {
+    color: #b94a48 !important;
+  }
+
+  a.text-error:hover,
+  a.text-error:focus {
+    color: #953b39 !important;
+  }
+
+  .text-info {
+    color: #3a87ad !important;
+  }
+
+  a.text-info:hover,
+  a.text-info:focus {
+    color: #2d6987 !important;
+  }
+
+  .text-success {
+    color: #468847 !important;
+  }
+
+  a.text-success:hover,
+  a.text-success:focus {
+    color: #356635 !important;
+  }
+}

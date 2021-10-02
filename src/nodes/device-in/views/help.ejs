@@ -1,0 +1,26 @@
+<p>Receive zigbee2mqtt device state</p>
+
+<p>
+  Read more at
+  <a href="https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html#zigbee2mqttfriendly_name">
+    Zigbee2MQTT docs
+  </a>
+</p>
+<p></p>
+
+<h3>Outputs</h3>
+<dl class="message-properties">
+  <dt>payload <span class="property-type">string</span></dt>
+  <dd>Zigbee2MQTT state object</dd>
+  <dt>topic <span class="property-type">string</span></dt>
+  <dd>the MQTT topic, in the form of <code>${base_topic}/${topic}</code></dd>
+  <dt>retain <span class="property-type">boolean</span></dt>
+  <dd>
+    <ul>
+      <li><code>true</code> - state was received upon sendInitialValue connection and did not actually change</li>
+      <li><code>false</code> - the state was updated either by last will or zigbee2mqtt itself</li>
+    </ul>
+  </dd>
+  <dt>topic <span class="property-type">string</span></dt>
+  <dd>the MQTT topic, in the form of <code>${base_topic}/bridge/state</code></dd>
+</dl>

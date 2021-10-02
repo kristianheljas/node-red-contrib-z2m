@@ -30,23 +30,39 @@
     "postpack": "gulp postpack",
     "prepare": "is-ci || node scripts/not-project-root.js || (husky install && yarn --cwd .node-red)"
   },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
   "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.12",
+    "@babel/preset-typescript": "^7.13.0",
     "@commitlint/cli": "^12.0.1",
     "@commitlint/config-conventional": "^12.0.1",
     "@schemastore/package": "^0.0.6",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
+    "@types/ejs": "^3.0.6",
     "@types/eslint": "^7.2.7",
+    "@types/express": "^4.17.11",
     "@types/fancy-log": "^1.3.1",
     "@types/gulp": "^4.0.8",
+    "@types/lodash": "^4.14.168",
     "@types/minimist": "^1.2.1",
     "@types/node": "^14.14.35",
     "@types/node-red": "^1.1.1",
     "@types/nodemon": "^1.19.0",
     "@types/rimraf": "^3.0.0",
+    "@types/select2": "^4.0.53",
+    "@types/through2": "^2.0.36",
     "@types/undertaker": "^1.2.6",
+    "@types/vinyl": "^2.0.4",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "css-loader": "^5.2.0",
+    "ejs": "^3.1.6",
     "eslint": "^7.22.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-airbnb-typescript": "^12.3.1",
@@ -62,26 +78,38 @@
     "lint-staged": "^10.5.4",
     "minimist": "^1.2.5",
     "mqtt": "^4.2.6",
+    "mqtt-packet": "^6.9.0",
     "node-red": "^1.2.9",
     "nodemon": "^2.0.7",
     "plugin-error": "^1.0.1",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
+    "sass": "^1.32.8",
+    "sass-loader": "^11.0.1",
+    "select2": "^4.1.0-rc.0",
     "semantic-release": "^17.4.2",
     "sort-package-json": "^1.49.0",
+    "style-loader": "^2.0.0",
+    "through2": "^4.0.2",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.3",
-    "undertaker": "^1.3.0"
+    "undertaker": "^1.3.0",
+    "vinyl": "^2.2.1",
+    "webpack": "^5.28.0",
+    "webpack-cli": "^4.5.0"
   },
   "engines": {
     "node": ">=12"
   },
   "node-red": {
     "nodes": {
-      "z2m-broker": "dist/nodes/broker.js",
-      "z2m-bridge-state": "dist/nodes/bridge/state.js",
-      "z2m-bridge-restart": "dist/nodes/bridge/restart.js",
-      "z2m-bridge-logs": "dist/nodes/bridge/logs.js"
+      "z2m-core": "dist/nodes/core/index.js",
+      "z2m-broker": "dist/nodes/broker/index.js",
+      "z2m-bridge-state": "dist/nodes/bridge-state/index.js",
+      "z2m-bridge-restart": "dist/nodes/bridge-restart/index.js",
+      "z2m-bridge-logs": "dist/nodes/bridge-logs/index.js",
+      "z2m-device-in": "dist/nodes/device-in/index.js",
+      "z2m-device-out": "dist/nodes/device-out/index.js"
     }
   }
 }

@@ -6,6 +6,7 @@ import minimist from 'minimist';
 import nodemon from 'nodemon';
 import rimraf from 'rimraf';
 import { TaskFunction } from 'undertaker';
+import compileHtmlPlugin from './compileHtmlPlugin';
 
 const argv = minimist(process.argv.slice(2));
 
@@ -16,8 +17,11 @@ const stdio = 'inherit';
 
 const binFolder = './node_modules/.bin/';
 
+const webpackBin = `${binFolder}/webpack`;
+const webpackArgs = ['--config', argv.project || 'webpack.config.ts'];
+
 const tscBin = `${binFolder}/tsc`;
-const tscArgs = ['--project', argv.project || 'tsconfig.json'];
+const tscArgs = ['--project', argv.project || 'tsconfig.build.json'];
 
 const nodeRedBin = `${binFolder}/node-red`;
 
@@ -30,15 +34,17 @@ export const clean: TaskFunction = (done) => {
 /* #endregion */
 /* #region Build tasks */
 
-export const buildTypescript: TaskFunction = () => spawn(tscBin, tscArgs, { stdio });
-buildTypescript.flags = {
-  '--project': 'Specify custom tsconfig.json file',
-};
+export const buildFrontend: TaskFunction = () => spawn(webpackBin, webpackArgs, { stdio });
 
-export const copyHtml: TaskFunction = () => src('src/**/*.html').pipe(dest('dist'));
+export const buildTypescript: TaskFunction = () => spawn(tscBin, tscArgs, { stdio });
+
+export const compileHtml: TaskFunction = () =>
+  src(['./src/nodes/**/index.ts'], { base: 'src' }).pipe(compileHtmlPlugin()).pipe(dest('dist'));
 
 /* #endregion */
 /* #region Development tasks */
+
+export const watchFrontend: TaskFunction = () => spawn(webpackBin, [...webpackArgs, '--watch'], { stdio });
 
 export const watchTypescript: TaskFunction = () =>
   spawn(
@@ -59,7 +65,8 @@ export const watchTypescript: TaskFunction = () =>
     },
   );
 
-export const watchHtml: TaskFunction = () => watch('src/**/*.html', { ignoreInitial: false }, copyHtml);
+export const watchHtml: TaskFunction = () =>
+  watch(['src/nodes/**/*', 'src/**/*.ejs'], { ignoreInitial: false }, compileHtml);
 
 export const waitForBuild: TaskFunction = async () => {
   // Waits for initial watcher process to finish building the first time
@@ -83,8 +90,7 @@ export const startDevServer: TaskFunction = (done) => {
     ext: '*',
     script: `${nodeRedBin}`,
     args: ['--userDir', '.node-red'],
-    stdin: false,
-    delay: 200,
+    delay: 1000,
   });
 
   monitor.on('restart', () => log('file change detected, restarting server...'));
@@ -93,5 +99,5 @@ export const startDevServer: TaskFunction = (done) => {
 
 /* #endregion */
 
-export const buildAll = parallel(buildTypescript, copyHtml);
-export const watchAll = parallel(watchTypescript, watchHtml);
+export const buildAll = parallel(buildTypescript, buildFrontend, compileHtml);
+export const watchAll = parallel(watchTypescript, watchFrontend, watchHtml);

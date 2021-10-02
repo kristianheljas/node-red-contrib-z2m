@@ -1,0 +1,41 @@
+<script type="text/html" data-template-name="z2m-broker">
+  <div class="control-group">
+    <label class="control-label" for="node-config-input-broker"> <i class="fa fa-globe"></i> Server </label>
+    <div class="controls">
+      <input type="text" id="node-config-input-broker" />
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="node-config-input-topic"> <i class="fa fa-tasks"></i> Base topic </label>
+    <div class="controls">
+      <input type="text" id="node-config-input-topic" placeholder="Base topic" />
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="node-config-input-name"> <i class="fa fa-tag"></i> Name </label>
+    <div class="controls">
+      <input type="text" id="node-config-input-name" placeholder="Name" />
+    </div>
+  </div>
+</script>
+
+<script type="text/html" data-help-name="z2m-broker">
+  <p>Configuration for a connection to Zigbee2MQTT via MQTT broker.</p>
+  <p>
+    This configuration will create a single connection to Zigbee2MQTT via the MQTT broker which will be then reused by
+    all other nodes
+  </p>
+
+  <h4>Server</h4>
+  <p>
+    MQTT broker configuration for the connection. The same MQTT broker can be shared with other MQTT nodes such as
+    <code>mqtt in</code> and <code>mqtt out</code>
+  </p>
+
+  <h4>Base topic</h4>
+  <p>
+    Same as <code>base_topic</code> configuration option inside your Zigbee2MQTT's
+    <a href="https://www.zigbee2mqtt.io/information/configuration.html">configuration.yaml</a> file. Default is
+    "zigbee2mqtt"
+  </p>
+</script>

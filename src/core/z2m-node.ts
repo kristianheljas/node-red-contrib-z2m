@@ -1,6 +1,6 @@
 import type { NodeDef } from 'node-red';
 import { Node } from './node';
-import { Z2mBrokerNode } from './z2m-broker';
+import Z2mBrokerNode from '../nodes/broker/node';
 
 export * from './node';
 
@@ -9,11 +9,12 @@ export interface Z2mNodeDef extends NodeDef {
   topic: string;
 }
 
-export abstract class Z2mNode<TConfig = unknown> extends Node<Z2mNodeDef & TConfig> {
+export abstract class Z2mNode<TConfig extends Z2mNodeDef = Z2mNodeDef> extends Node<TConfig> {
   z2m: Z2mBrokerNode;
 
-  constructor(config: Z2mNodeDef & TConfig) {
+  constructor(config: TConfig) {
     super(config);
+
     this.z2m = this.red.nodes.getNode(config.broker) as Z2mBrokerNode;
 
     // Confguration nodes can be disabled

@@ -1,0 +1,21 @@
+<%- include('forms/device-selector') %>
+<div class="control-group">
+  <label class="control-label" for="node-input-property"><i class="fa fa-sitemap"></i> Property</label>
+  <div class="controls">
+    <input type="text" id="node-input-property" placeholder="Leave empty to get full JSON state" />
+  </div>
+</div>
+<div class="control-group">
+  <label class="control-label" style="vertical-align: top"><i class="fa fa-filter"></i> Options</label>
+  <div class="controls">
+    <label class="checkbox">
+      <input type="checkbox" id="node-input-onlyWhenChanged" />
+      only when changed
+    </label>
+    <label class="checkbox">
+      <input type="checkbox" id="node-input-sendInitialValue" />
+      send initial value
+    </label>
+  </div>
+</div>
+<%- include('form-row-broker') %> <%- include('form-row-name') %>

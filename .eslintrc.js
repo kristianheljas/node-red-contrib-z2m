@@ -42,6 +42,13 @@ module.exports = {
       },
     },
     {
+      files: ['src/editor/**/*', 'src/nodes/**/editor.ts'],
+      rules: {
+        // Broswer code should be able to log warning and errors to console
+        'no-console': ['warn', { allow: ['warn', 'error'] }],
+      },
+    },
+    {
       files: ['./*.{js,ts}', 'scripts/**/*.{js,ts}'],
       rules: {
         // scripts in ./ and scripts/ folder should be happy with devDependencies as they are development tools

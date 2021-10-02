@@ -1,0 +1,24 @@
+<p>Get zigbee2mqtt state updates</p>
+
+<h3>Outputs</h3>
+<dl class="message-properties">
+  <dt>payload <span class="property-type">string</span></dt>
+  <dd>
+    either <code>"online"</code> or <code>"offline"</code>, see
+    <a href="https://www.zigbee2mqtt.io/information/mqtt_topics_and_message_structure.html#zigbee2mqttbridgestate">
+      Zigbee2MQTT docs
+    </a>
+  </dd>
+  <dt>retain <span class="property-type">boolean</span></dt>
+  <dd>
+    <ul>
+      <li><code>true</code> - state was received upon initial connection and did not actually change</li>
+      <li><code>false</code> - the state was updated either by last will or zigbee2mqtt itself</li>
+    </ul>
+  </dd>
+  <dt>topic <span class="property-type">string</span></dt>
+  <dd>the MQTT topic, in the form of <code>${base_topic}/bridge/state</code></dd>
+</dl>
+
+<h3>Details</h3>
+<p>If you want to output only when the state changes, uncheck <code>send initial value</code> in the node options</p>
