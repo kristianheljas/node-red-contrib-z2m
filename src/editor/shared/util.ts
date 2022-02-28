@@ -55,7 +55,11 @@ export function getBrokersFor(node: { z?: string }): string[] {
   try {
     RED.nodes.eachConfig((config) => {
       if (config.type === 'z2m-broker') {
+        // This is what you get when using internal APIs (`d` is for disabled)
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore 2339
         const enabled = !config.d;
+
         const accessible = !config.z || config.z === node.z;
         if (enabled && accessible) {
           brokers.push(config.id || '');

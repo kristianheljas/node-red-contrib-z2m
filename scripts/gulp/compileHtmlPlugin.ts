@@ -61,7 +61,8 @@ const transform: TransformFunction = async (file: Vinyl, encoding, callback) => 
     file.contents = await ejs.renderFile(defaultTemplate, templateData, templateOptions).then(Buffer.from);
     callback(null, file);
   } catch (err) {
-    callback(new PluginError('Something went wrong when compiling template!', err));
+    // FIXME: `err as Error` resolves incompatible type issue for now...
+    callback(new PluginError('Something went wrong when compiling template!', err as Error));
   }
 };
 

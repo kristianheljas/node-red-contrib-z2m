@@ -30,7 +30,11 @@ export class Registrator {
         const availableBrokers = getBrokersFor(this);
         if (availableBrokers.length === 1) {
           // eslint-disable-next-line prefer-destructuring
-          this.broker = availableBrokers[0];
+
+          // FIXME: `this.broker` should be typed via `src/types/editor.d.ts`
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore 2339
+          [this.broker] = availableBrokers;
         }
         if (typeof nodeDef.onadd === 'function') {
           nodeDef.onadd.call(this);
