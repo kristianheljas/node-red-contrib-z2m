@@ -31,4 +31,4 @@ export class ApiClient {
   }
 }
 
-export default new ApiClient('/node-red-contrib-z2m');
+export default new ApiClient('node-red-contrib-z2m');
